@@ -5,13 +5,14 @@ const forecast = (latitude, longitude, callback) => {
 
     request({url, json: true}, (error, { body }) => {
         if (error) {
-            callback('Unable to connect to the weather service', undefined)
+            callback('Unable to connect to the weather service', undefined, undefined)
         } else if (body.error) {
-            callback('Unable to find the location', undefined)
+            callback('Unable to find the location', undefined, undefined)
         } else {
-            console.log(body)
-            callback(undefined, `The local time is ${body.location.localtime}. It's ${body.current.weather_descriptions[0]} outside.
-            The temperature is ${body.current.temperature} degrees celsius, but it feels like ${body.current.feelslike} degree celsius.`)
+            // console.log(body)
+            callback(undefined, `The local time is ${body.location.localtime}. 
+            The temperature is ${body.current.temperature} degrees celsius, and it feels like ${body.current.feelslike} degree celsius.`,
+            body.current.weather_icons[0])
         }
     })
 }
